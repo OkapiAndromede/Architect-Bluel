@@ -1,7 +1,7 @@
 //Fichier qui contient les fonctions qui gèrent la manipulation de DOM
 
 /* La fonction permet de générer les travaux, elle prends en paramètre
-un variable array d'objet JS */
+une variable array d'objet JS */
 export function worksGenerator(works) {
   for (let i = 0; i < works.length; i++) {
     const project = works[i];
@@ -20,5 +20,17 @@ export function worksGenerator(works) {
     divGallery.appendChild(projetElement);
     projetElement.appendChild(imageElement);
     projetElement.appendChild(txtElement);
+  }
+}
+
+/*La fonction permet de générer les filtres, elle prends en paramètre
+un tableau */
+export function filtersGenerator(nomCategory) {
+  for (let i = 0; i < nomCategory.length; i++) {
+    const filter = nomCategory[i];
+    const filterParent = document.querySelector(".portfolio__filter");
+    const filterBtn = document.createElement("button");
+    filterBtn.innerText = filter;
+    filterParent.appendChild(filterBtn);
   }
 }

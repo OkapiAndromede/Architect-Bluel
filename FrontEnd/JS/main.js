@@ -1,5 +1,5 @@
 import { dataWorks, dataCategory } from "./api.js";
-import { worksGenerator } from "./dom.js";
+import { worksGenerator, filtersGenerator } from "./dom.js";
 console.log("Script chargé");
 
 dataWorks().then((works) => {
@@ -14,13 +14,5 @@ dataCategory().then((category) => {
   const nomCategory = category.map((element) => element.name);
   //Unshift() est une méthode qui ajoute un élément au début d'un tableau
   nomCategory.unshift("Tous");
-  console.log(nomCategory);
-
-  for (let i = 0; i < nomCategory.length; i++) {
-    const filter = nomCategory[i];
-    const filterParent = document.querySelector(".portfolio__filter");
-    const filterBtn = document.createElement("button");
-    filterBtn.innerText = filter;
-    filterParent.appendChild(filterBtn);
-  }
+  filtersGenerator(nomCategory);
 });
