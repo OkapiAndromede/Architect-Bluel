@@ -1,18 +1,38 @@
 import { dataWorks, dataCategory } from "./api.js";
 import { worksGenerator, filtersGenerator } from "./dom.js";
+import { filterBtn } from "./util.js";
 console.log("Script chargé");
+//Importation des travaux
+const response = await fetch("http://localhost:5678/api/works");
+const works = await response.json();
+//Importation des catégorie
+const responseCategory = await fetch("http://localhost:5678/api/categories");
+const category = await responseCategory.json();
 
-dataWorks().then((works) => {
-  console.log(works);
-  //Supression des travaux encodé nativement dans le HTML
-  document.querySelector(".gallery").innerHTML = ``;
-  //Génération des travaux de façon dynamique
-  worksGenerator(works);
-});
+//Supression des travaux encodé nativement dans le HTML
+document.querySelector(".gallery").innerHTML = ``;
+//Génération des travaux de façon dynamique
+worksGenerator(works);
 
-dataCategory().then((category) => {
-  const nomCategory = category.map((element) => element.name);
-  //Unshift() est une méthode qui ajoute un élément au début d'un tableau
-  nomCategory.unshift("Tous");
-  filtersGenerator(nomCategory);
-});
+const nomCategory = category.map((element) => element.name);
+//Unshift() est une méthode qui ajoute un élément au début d'un tableau
+nomCategory.unshift("Tous");
+filtersGenerator(nomCategory);
+
+const button = document.querySelectorAll("#portfolio button");
+for (let i = 0; i < button.length; i++) {
+  button[i].addEventListener("click", (event) => {
+    button.forEach((btn) => btn.classList.remove("selected"));
+
+    event.target.classList.add("selected");
+    const worksFiltree = works.filter((projet) => {
+      return projet.category.name === event.target.innerText;
+    });
+    document.querySelector(".gallery").innerHTML = ``;
+    if (event.target.innerText !== "Tous") {
+      worksGenerator(worksFiltree);
+    } else {
+      worksGenerator(works);
+    }
+  });
+}
