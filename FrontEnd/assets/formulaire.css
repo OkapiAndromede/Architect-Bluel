@@ -216,7 +216,10 @@ header {
   height: 3.187rem;
   box-shadow: 0px 4px 14px 0px #00000017;
 }
-#formulaire-connexion input[type="text"] {
+#formulaire-connexion input[type="email"] {
+  padding-left: 1rem;
+}
+#formulaire-connexion input[type="password"] {
   padding-left: 1rem;
 }
 #formulaire-connexion button[type="submit"] {
