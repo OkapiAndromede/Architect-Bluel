@@ -18,7 +18,7 @@ const nomCategory = category.map((element) => element.name);
 //Unshift() est une méthode qui ajoute un élément au début d'un tableau
 nomCategory.unshift("Tous");
 filtersGenerator(nomCategory);
-
+//Programme filtre fonctionnel
 const button = document.querySelectorAll("#portfolio button");
 for (let i = 0; i < button.length; i++) {
   button[i].addEventListener("click", (event) => {
@@ -29,6 +29,7 @@ for (let i = 0; i < button.length; i++) {
       return projet.category.name === event.target.innerText;
     });
     document.querySelector(".gallery").innerHTML = ``;
+
     if (event.target.innerText !== "Tous") {
       worksGenerator(worksFiltree);
     } else {
