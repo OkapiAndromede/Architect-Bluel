@@ -25,6 +25,7 @@ form.addEventListener("submit", async (event) => {
   ) {
     const serverResponse = await logIn(emailClean, passwordClean);
     console.log(serverResponse);
+    redirection(serverResponse);
   } else {
     console.log(
       "Veuillez remplir les champs avec un email et un mot de passe valide"
@@ -54,5 +55,12 @@ async function logIn(emailLog, passwordLog) {
   } else {
     const data = response.json();
     return data;
+  }
+}
+function redirection(responseData) {
+  if (responseData !== null) {
+    document.location.href = "./index.html";
+  } else {
+    console.log("Erreur de redirection");
   }
 }
