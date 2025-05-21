@@ -32,12 +32,20 @@ form.addEventListener("submit", async (event) => {
     );
   }
 });
-
+/**Cette fonction enlève les espacements dans une chaine de caractère
+ * @param {string} texte : le texte saisi dans les inputs du formulaire de log in
+ * @returns {string} : le texte saisi sans les espaces
+ */
 function nettoyageEspacement(texte) {
   let texteSansEspace = texte.replace(/\s+/g, "");
   return texteSansEspace;
 }
-
+/**
+ * La fonction envoie les information de logIn en format JSON à l'API (POST)
+ * @param {string} emailLog : l'email de l'utilisateur
+ * @param {string} passwordLog : le mot de passe de l'utilisateur
+ * @returns {object} un objet javascript contenant le token d'authentification
+ */
 async function logIn(emailLog, passwordLog) {
   const dataLogIn = {
     email: emailLog,
@@ -57,6 +65,10 @@ async function logIn(emailLog, passwordLog) {
     return data;
   }
 }
+/**
+ * La fonction renvoie l'utilisateur sur la landing page si la réponse serveur est non nul
+ * @param {object} responseData : un objet JS contenant le token d'authentification
+ */
 function redirection(responseData) {
   if (responseData !== null) {
     document.location.href = "./index.html";
