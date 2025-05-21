@@ -240,6 +240,49 @@ header {
   text-decoration: underline;
   cursor: pointer;
 }
+/***** Popup*****/
+/*
+.popupBackground {
+  background-color: var(--main-color);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1;
+}
+*/
+.popupBackground .popup {
+  background-color: rgba(29, 97, 84, 0.3);
+  backdrop-filter: blur(20px);
+  width: 600px;
+  height: 500px;
+  border-radius: 30px;
+  position: absolute;
+  top: 20%;
+  left: 30%;
+  z-index: 1;
+}
+.popup .popup__btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 1.5rem;
+  color: var(--tertiary-color);
+  opacity: 0.8;
+  cursor: pointer;
+}
+.popup .popup__txt {
+  font-size: 1.5rem;
+}
+.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inactive {
+  display: none;
+}
 /***** Footer*****/
 footer {
   position: fixed;
