@@ -2,6 +2,7 @@
 :root {
   --main-color: #b1663c;
   --secondary-color: #1d6154;
+  --tertiary-color: #fffef8;
 }
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
@@ -142,6 +143,7 @@ body {
   margin: auto;
   font-family: "Work Sans";
   font-size: 14px;
+  background-color: var(--tertiary-color);
 }
 header {
   display: flex;
