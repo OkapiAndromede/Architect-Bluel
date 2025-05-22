@@ -252,7 +252,7 @@ header {
   z-index: 1;
 }
 */
-.popupBackground .popup {
+.popup {
   background-color: rgba(29, 97, 84, 0.3);
   backdrop-filter: blur(20px);
   width: 600px;
@@ -260,7 +260,7 @@ header {
   border-radius: 30px;
   position: absolute;
   top: 20%;
-  left: 30%;
+  left: 32%;
   z-index: 1;
 }
 .popup .popup__btn {
