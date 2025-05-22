@@ -247,6 +247,20 @@ header {
   text-decoration: underline;
   cursor: pointer;
 }
+#formulaire-connexion #logOut {
+  display: block;
+  border: none;
+  border-radius: 60px;
+  background-color: var(--secondary-color);
+  color: white;
+  cursor: pointer;
+  transition: transform 350ms;
+  margin-top: 1.5rem;
+  padding: 0.625rem 2.375rem;
+}
+#formulaire-connexion #logOut:hover {
+  transform: scale(1.1);
+}
 /***** Popup*****/
 .popup {
   background-color: rgba(29, 97, 84, 0.3);

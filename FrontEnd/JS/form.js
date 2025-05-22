@@ -8,7 +8,10 @@ import {
 
 const form = document.querySelector("form");
 const btnPopUp = document.querySelector(".popup__btn");
-
+let identification = localStorage.getItem("identifiant");
+console.log(identification);
+logOut(identification);
+const btnLogOut = document.getElementById("logOut");
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   //Récupération des valeurs
@@ -37,6 +40,15 @@ form.addEventListener("submit", async (event) => {
     );
   }
   console.log(serverResponse);
+  if (identification === null) {
+    localStorage.setItem("identifiant", serverResponse.token);
+    identification = localStorage.getItem("identifiant");
+    console.log(identification);
+  } else {
+    localStorage.removeItem("identifiant");
+    identification = undefined;
+    console.log(identification);
+  }
   //Création du test pour rediriger vers la landing page
   if (serverResponse === undefined) {
     afficherPopUp();
@@ -48,6 +60,11 @@ form.addEventListener("submit", async (event) => {
   password.value = "";
 });
 
+btnLogOut.addEventListener("click", () => {
+  localStorage.removeItem("identifiant");
+  location.reload();
+});
+
 btnPopUp.addEventListener("click", () => {
   //Effacement du contenu du popUp
   const textErrorConteneur = document.querySelector(".popup__txt");
@@ -55,3 +72,21 @@ btnPopUp.addEventListener("click", () => {
   //Fermeture du popUp
   closePopUp();
 });
+
+function logOut(identification) {
+  const formulaireConteneur = document.getElementById("formulaire-connexion");
+  const formulaireTitle = document.createElement("h2");
+  const formulaireTxt = document.createElement("p");
+  const btnLogOut = document.createElement("button");
+  if (identification !== null) {
+    formulaireConteneur.innerHTML = "";
+    formulaireTitle.innerText = "Log Out";
+    formulaireTxt.innerText = "Vous êtes déjà connecté à votre compte !";
+    btnLogOut.innerText = "Se déconnecter";
+    btnLogOut.id = "logOut";
+
+    formulaireConteneur.appendChild(formulaireTitle);
+    formulaireConteneur.appendChild(formulaireTxt);
+    formulaireConteneur.appendChild(btnLogOut);
+  }
+}
