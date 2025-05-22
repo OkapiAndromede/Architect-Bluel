@@ -185,9 +185,14 @@ header {
   list-style-type: none;
 }
 .navbar li {
-  cursor: pointer;
   padding: 0 10px;
   font-size: 1.2em;
+}
+.navbar li:not(.selected) {
+  cursor: pointer;
+}
+.navbar li:hover:not(.selected) {
+  color: var(--main-color);
 }
 .navbar .selected {
   font-weight: 600;
@@ -241,17 +246,6 @@ header {
   cursor: pointer;
 }
 /***** Popup*****/
-/*
-.popupBackground {
-  background-color: var(--main-color);
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  height: 100vh;
-  width: 100vw;
-  z-index: 1;
-}
-*/
 .popup {
   background-color: rgba(29, 97, 84, 0.3);
   backdrop-filter: blur(20px);
