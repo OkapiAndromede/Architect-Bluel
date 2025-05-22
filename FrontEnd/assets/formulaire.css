@@ -187,12 +187,14 @@ header {
 .navbar li {
   padding: 0 10px;
   font-size: 1.2em;
+  transition: all 300ms;
 }
 .navbar li:not(.selected) {
   cursor: pointer;
 }
 .navbar li:hover:not(.selected) {
   color: var(--main-color);
+  transform: translateY(-5px) scale(1.1);
 }
 .navbar .selected {
   font-weight: 600;
