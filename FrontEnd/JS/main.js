@@ -14,32 +14,32 @@ const responseCategoryServer = await fetch(
 );
 const category = await responseCategoryServer.json();
 //Déclaration des variables globales
-let isAuthenticated = !!localStorage.getItem("identifiant");
+let isAuthenticated = !!localStorage.getItem("editorToken");
 //Récupération des éléments du DOM
 const divFilter = document.querySelector(".portfolio__filter");
-const hasBtnFilter = document.querySelectorAll("#portfolio button");
 //Supression des travaux encodé nativement dans le HTML
 document.querySelector(".gallery").innerHTML = ``;
 //Génération des travaux de façon dynamique
 worksGenerator(works);
 
-const nomCategory = category.map((element) => element.name);
+const categoryName = category.map((element) => element.name);
 //Unshift() est une méthode qui ajoute un élément au début d'un tableau
-nomCategory.unshift("Tous");
+categoryName.unshift("Tous");
 //Mise à jour de l'affichage en fonction du statut d'authentification
 
 if (!isAuthenticated) {
-  filtersGenerator(nomCategory);
+  filtersGenerator(categoryName);
   removeEditorStyle(isAuthenticated);
 } else {
   divFilter.innerHTML = "";
   displayEditorStyle(isAuthenticated);
 }
 //Programme permettant de filter les travaux en fonction du filtre sélectionné
-if (hasBtnFilter) {
-  for (let i = 0; i < hasBtnFilter.length; i++) {
-    hasBtnFilter[i].addEventListener("click", (event) => {
-      hasBtnFilter.forEach((btn) => btn.classList.remove("selected"));
+const btnFilter = document.querySelectorAll(".portfolio__filter button");
+if (btnFilter) {
+  for (let i = 0; i < btnFilter.length; i++) {
+    btnFilter[i].addEventListener("click", (event) => {
+      btnFilter.forEach((btn) => btn.classList.remove("selected"));
 
       event.target.classList.add("selected");
       const worksFiltered = works.filter((projet) => {

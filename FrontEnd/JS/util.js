@@ -1,32 +1,4 @@
 //Fichier qui regroupe des fonctions utilitaires (filtres)
-/*La fonction vient ajouter à chaque bouton un listener au click :
- - Enlève à tous les boutons la class "selected"
- - Ajoute au bouton cliqué la class "selected"
- - Filtre la liste des travaux et rend une liste filtré en fct du bouton
- - Efface le html de tous les travaux
- - En fonction du bouton, reconstruit le html des travaux
-
- Prends en paramètre le array d'objet JS des travaux */
-
-export function filterBtn(works) {
-  const button = document.querySelectorAll("#portfolio button");
-  for (let i = 0; i < button.length; i++) {
-    button[i].addEventListener("click", (event) => {
-      button.forEach((btn) => btn.classList.remove("selected"));
-
-      event.target.classList.add("selected");
-      const worksFiltree = works.filter((projet) => {
-        return projet.category.name === event.target.innerText;
-      });
-      document.querySelector(".gallery").innerHTML = ``;
-      if (event.target.innerText !== "Tous") {
-        worksGenerator(worksFiltree);
-      } else {
-        worksGenerator(works);
-      }
-    });
-  }
-}
 
 /**
  * La fonction envoie les information de logIn en format JSON à l'API (POST)
@@ -55,16 +27,16 @@ export async function logIn(emailLog, passwordLog) {
 }
 
 /**Cette fonction enlève les espacements dans une chaine de caractère
- * @param {string} texte : le texte saisi dans les inputs du formulaire de log in
+ * @param {string} text : le texte saisi dans les inputs du formulaire de log in
  * @returns {string} : le texte saisi sans les espaces
  */
-export function nettoyageEspacement(texte) {
-  let texteSansEspace = texte.replaceAll(/\s+/g, "");
+export function removeSpaces(text) {
+  let texteSansEspace = text.replaceAll(/\s+/g, "");
   return texteSansEspace;
 }
 // Cette fonction affiche le popup en changeant la class
 // Passe de "inactive" à "active"
-export function afficherPopUp() {
+export function displayPopUp() {
   const divPopup = document.querySelector(".popup");
   const textErrorConteneur = document.querySelector(".popup__txt");
   const textError = document.createElement("p");

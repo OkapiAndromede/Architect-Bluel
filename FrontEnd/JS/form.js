@@ -1,61 +1,53 @@
-import {
-  nettoyageEspacement,
-  afficherPopUp,
-  logIn,
-  closePopUp,
-} from "./util.js";
+import { removeSpaces, logIn, closePopUp, displayPopUp } from "./util.js";
 import { logOut } from "./dom.js";
 
 // Vérification du localStorage et du token
-let identification = localStorage.getItem("identifiant");
-logOut(identification);
+let isAuthenticated = !!localStorage.getItem("editorToken");
+logOut(isAuthenticated);
 // Récupération des éléments du DOM
-const form = document.querySelector("form");
+const baliseForm = document.querySelector("form");
 const btnPopUp = document.querySelector(".popup__btn");
 const btnLogOut = document.getElementById("logOut");
-// Listening du click lors du logIn si form renvoie une valeur truthy
+// Listening du click lors du logIn si baliseForm renvoie une valeur truthy
 
-if (form) {
-  form.addEventListener("submit", async (event) => {
+if (baliseForm) {
+  baliseForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    //Récupération des valeurs
+    //Récupération des valeurs des inputs du formulaire
     const email = document.getElementById("email");
     const password = document.getElementById("password");
     // Déclaration des variables globales
     let serverResponse = undefined;
-    //Création des variables de tests
+    //Création des expressions réulières pour les emails et les passwords
     let regexEmail = new RegExp("^[A-Za-z0-9._-]+@[A-Za-z0-9]+.[A-Za-z]{2,}$");
     let regexPassword = new RegExp(
       "^[A-Za-z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?`~]{2,}$"
     );
-    //Nettoyage des espacements
-    const emailClean = nettoyageEspacement(email.value);
-    const passwordClean = nettoyageEspacement(password.value);
+    //Nettoyage des espacements au niveau des input email & password
+    const emailWithoutSpace = removeSpaces(email.value);
+    const passwordWithoutSpace = removeSpaces(password.value);
 
     //Création du test pour entrer les valeurs email & password dans logIn()
-    if (regexEmail.test(emailClean) && regexPassword.test(passwordClean)) {
-      serverResponse = await logIn(emailClean, passwordClean);
+    if (
+      regexEmail.test(emailWithoutSpace) &&
+      regexPassword.test(passwordWithoutSpace)
+    ) {
+      serverResponse = await logIn(emailWithoutSpace, passwordWithoutSpace);
     } else {
       console.log(
         "Veuillez remplir les champs avec un email et un mot de passe valide"
       );
     }
-    console.log(serverResponse);
+    //Si le serveur répond une valeur truthy, on stock le token d'identification
     if (serverResponse) {
-      if (!identification) {
-        localStorage.setItem("identifiant", serverResponse.token);
-        identification = localStorage.getItem("identifiant");
-        console.log(identification);
-      } else {
-        localStorage.removeItem("identifiant");
-        identification = undefined;
-        console.log(identification);
-      }
+      localStorage.setItem("editorToken", serverResponse.token);
+      isAuthenticated = localStorage.getItem("editorToken");
+      console.log(isAuthenticated);
     }
 
     //Création du test pour rediriger vers la landing page
     if (!serverResponse) {
-      afficherPopUp();
+      displayPopUp();
     } else {
       document.location.href = "./index.html";
     }
@@ -68,7 +60,7 @@ if (form) {
 
 if (btnLogOut) {
   btnLogOut.addEventListener("click", () => {
-    localStorage.removeItem("identifiant");
+    localStorage.removeItem("editorToken");
     location.reload();
   });
 }

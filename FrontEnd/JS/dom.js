@@ -25,11 +25,11 @@ export function worksGenerator(works) {
 }
 
 /**La fonction permet de générer les filtres des travaux
- * @param {Array} nomCategory : un tableau contenant le nom des catégories
+ * @param {Array} categoryName : un tableau contenant le nom des catégories
  */
-export function filtersGenerator(nomCategory) {
-  for (let i = 0; i < nomCategory.length; i++) {
-    const filter = nomCategory[i];
+export function filtersGenerator(categoryName) {
+  for (let i = 0; i < categoryName.length; i++) {
+    const filter = categoryName[i];
     const filterParent = document.querySelector(".portfolio__filter");
     const filterBtn = document.createElement("button");
     filterBtn.innerText = filter;
@@ -38,14 +38,14 @@ export function filtersGenerator(nomCategory) {
 }
 
 /**La fonction permet de générer le message de connexion déjà établie
- * @param {string} identification : la variable de stockage du token
+ * @param {boolean} hasToken : la variable indiquant la présence du token
  */
-export function logOut(identification) {
+export function logOut(hasToken) {
   const formulaireConteneur = document.getElementById("formulaire-connexion");
   const formulaireTitle = document.createElement("h2");
   const formulaireTxt = document.createElement("p");
   const btnLogOut = document.createElement("button");
-  if (identification !== null) {
+  if (hasToken) {
     formulaireConteneur.innerHTML = "";
     formulaireTitle.innerText = "Log Out";
     formulaireTxt.innerText = "Vous êtes déjà connecté à votre compte !";
@@ -59,15 +59,20 @@ export function logOut(identification) {
 }
 /**
  * La fonction modifie la propriété "display" des balise "editor__mode"
- * @param {string} token : la variable de stockage du token
+ * @param {boolean} hasToken : la variable indiquant la présence du token
  */
-export function editorStyle(token) {
+export function removeEditorStyle(hasToken) {
   const editorConteneur = document.querySelectorAll(".editor__mode");
-  if (!token) {
+  if (!hasToken) {
     editorConteneur.forEach((element) => {
       element.style.display = "none";
     });
-  } else {
+  }
+}
+
+export function displayEditorStyle(hasToken) {
+  const editorConteneur = document.querySelectorAll(".editor__mode");
+  if (hasToken) {
     editorConteneur.forEach((element) => {
       element.style.display = "flex";
     });
