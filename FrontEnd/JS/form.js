@@ -33,10 +33,7 @@ if (form) {
     const passwordClean = nettoyageEspacement(password.value);
 
     //Création du test pour entrer les valeurs email & password dans logIn()
-    if (
-      regexEmail.test(emailClean) === true &&
-      regexPassword.test(passwordClean) === true
-    ) {
+    if (regexEmail.test(emailClean) && regexPassword.test(passwordClean)) {
       serverResponse = await logIn(emailClean, passwordClean);
     } else {
       console.log(
@@ -44,18 +41,20 @@ if (form) {
       );
     }
     console.log(serverResponse);
-    if (identification === null) {
-      localStorage.setItem("identifiant", serverResponse.token);
-      identification = localStorage.getItem("identifiant");
-      console.log(identification);
-    } else {
-      localStorage.removeItem("identifiant");
-      identification = undefined;
-      console.log(identification);
+    if (serverResponse) {
+      if (!identification) {
+        localStorage.setItem("identifiant", serverResponse.token);
+        identification = localStorage.getItem("identifiant");
+        console.log(identification);
+      } else {
+        localStorage.removeItem("identifiant");
+        identification = undefined;
+        console.log(identification);
+      }
     }
 
     //Création du test pour rediriger vers la landing page
-    if (serverResponse === undefined) {
+    if (!serverResponse) {
       afficherPopUp();
     } else {
       document.location.href = "./index.html";

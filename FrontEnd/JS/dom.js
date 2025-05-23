@@ -63,7 +63,7 @@ export function logOut(identification) {
  */
 export function editorStyle(token) {
   const editorConteneur = document.querySelectorAll(".editor__mode");
-  if (token === null) {
+  if (!token) {
     editorConteneur.forEach((element) => {
       element.style.display = "none";
     });

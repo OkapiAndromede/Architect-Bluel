@@ -59,7 +59,7 @@ export async function logIn(emailLog, passwordLog) {
  * @returns {string} : le texte saisi sans les espaces
  */
 export function nettoyageEspacement(texte) {
-  let texteSansEspace = texte.replace(/\s+/g, "");
+  let texteSansEspace = texte.replaceAll(/\s+/g, "");
   return texteSansEspace;
 }
 // Cette fonction affiche le popup en changeant la class

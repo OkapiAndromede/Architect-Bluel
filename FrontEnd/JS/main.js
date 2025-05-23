@@ -22,7 +22,7 @@ const nomCategory = category.map((element) => element.name);
 //Unshift() est une méthode qui ajoute un élément au début d'un tableau
 nomCategory.unshift("Tous");
 //Affichage des filtres en fonction de mode editor
-if (identification === null) {
+if (!identification) {
   filtersGenerator(nomCategory);
 } else {
   divFilter.innerHTML = "";
