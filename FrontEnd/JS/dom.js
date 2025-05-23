@@ -57,3 +57,19 @@ export function logOut(identification) {
     formulaireConteneur.appendChild(btnLogOut);
   }
 }
+/**
+ * La fonction modifie la propriété "display" des balise "editor__mode"
+ * @param {string} token : la variable de stockage du token
+ */
+export function editorStyle(token) {
+  const editorConteneur = document.querySelectorAll(".editor__mode");
+  if (token === null) {
+    editorConteneur.forEach((element) => {
+      element.style.display = "none";
+    });
+  } else {
+    editorConteneur.forEach((element) => {
+      element.style.display = "flex";
+    });
+  }
+}
