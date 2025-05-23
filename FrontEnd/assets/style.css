@@ -139,17 +139,15 @@ table {
 }
 /** end reset css**/
 body {
-  max-width: 1140px;
-  margin: auto;
   font-family: "Work Sans";
   font-size: 14px;
   background-color: var(--tertiary-color);
 }
-header {
-  display: flex;
-  justify-content: space-between;
-  margin: 50px 0;
+main {
+  max-width: 1140px;
+  margin: auto;
 }
+
 section {
   margin: 50px 0;
 }
@@ -174,6 +172,31 @@ h2 {
   font-weight: 700;
   font-size: 30px;
   color: var(--secondary-color);
+}
+/***** Header*****/
+header .editor__mode {
+  width: 100%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  gap: 0.712rem;
+}
+header .fa-regular {
+  color: white;
+  font-size: 1rem;
+  margin: 1.218rem 0 1.281rem 0;
+}
+header .editor__txt {
+  color: white;
+  font-size: 1rem;
+  margin: 1.218rem 0 1.281rem 0;
+}
+/***** Navbar *****/
+.navbar {
+  max-width: 1140px;
+  display: flex;
+  justify-content: space-between;
+  margin: 50px auto;
 }
 nav ul {
   display: flex;
@@ -213,9 +236,23 @@ li:hover {
   margin-bottom: 0.5em;
 }
 /***** Portfolio *****/
-#portfolio h2 {
-  text-align: center;
-  margin-bottom: 1em;
+
+.portfolio__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.93rem;
+  margin-bottom: 3.18rem;
+}
+.portfolio__title .editor__mode {
+  display: flex;
+  gap: 0.712rem;
+}
+.portfolio__title .editor__txt {
+  font-size: 1rem;
+}
+.portfolio__title .fa-regular {
+  font-size: 1rem;
 }
 .portfolio__filter {
   display: flex;
@@ -289,9 +326,15 @@ input[type="submit"] {
   text-align: center;
   border-radius: 60px;
 }
-
+footer {
+  background-color: white;
+  height: 60px;
+}
 footer nav ul {
   display: flex;
   justify-content: flex-end;
   margin: 2em;
+}
+footer li {
+  padding: 1.5rem 0 1.25rem 0;
 }
