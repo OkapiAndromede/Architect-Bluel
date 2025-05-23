@@ -198,6 +198,10 @@ header .editor__txt {
   justify-content: space-between;
   margin: 50px auto;
 }
+.navbar .logo {
+  width: 19.35px;
+  height: 19.35px;
+}
 nav ul {
   display: flex;
   align-items: center;
