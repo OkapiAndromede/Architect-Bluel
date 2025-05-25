@@ -207,14 +207,15 @@ nav ul {
   align-items: center;
   list-style-type: none;
 }
-nav li {
+.navbar li {
   cursor: pointer;
   padding: 0 10px;
   font-size: 1.2em;
+  transition: all 300ms;
 }
-
-li:hover {
+.navbar li:hover {
   color: var(--main-color);
+  transform: translateY(-5px) scale(1.1);
 }
 #introduction {
   display: flex;
