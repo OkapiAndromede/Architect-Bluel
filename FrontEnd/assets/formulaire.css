@@ -141,8 +141,8 @@ table {
 /** end reset css**/
 /***** Généralités*****/
 body {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   font-family: "Work Sans";
   font-size: 14px;
   background-color: var(--tertiary-color);
@@ -266,11 +266,12 @@ header {
   background-color: rgba(29, 97, 84, 0.3);
   backdrop-filter: blur(20px);
   width: 600px;
-  height: 500px;
+  height: 550px;
   border-radius: 30px;
-  position: absolute;
-  top: 20%;
-  left: 32%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
   z-index: 1;
 }
 .popup .popup__btn {
