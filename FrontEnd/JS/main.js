@@ -17,6 +17,7 @@ const category = await responseCategoryServer.json();
 let isAuthenticated = !!localStorage.getItem("editorToken");
 //Récupération des éléments du DOM
 const divFilter = document.querySelector(".portfolio__filter");
+const baliseLogStatus = document.getElementById("log-status");
 //Supression des travaux encodé nativement dans le HTML
 document.querySelector(".gallery").innerHTML = ``;
 //Génération des travaux de façon dynamique
@@ -33,6 +34,7 @@ if (!isAuthenticated) {
 } else {
   divFilter.innerHTML = "";
   displayEditorStyle(isAuthenticated);
+  baliseLogStatus.innerText = "logout";
 }
 //Programme permettant de filter les travaux en fonction du filtre sélectionné
 const btnFilter = document.querySelectorAll(".portfolio__filter button");

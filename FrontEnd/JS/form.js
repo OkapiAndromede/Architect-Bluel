@@ -8,8 +8,11 @@ logOut(isAuthenticated);
 const baliseForm = document.querySelector("form");
 const btnPopUp = document.querySelector(".popup__btn");
 const btnLogOut = document.getElementById("logOut");
+const baliseLogStatus = document.getElementById("log-status");
 // Listening du click lors du logIn si baliseForm renvoie une valeur truthy
-
+if (isAuthenticated) {
+  baliseLogStatus.innerText = "logout";
+}
 if (baliseForm) {
   baliseForm.addEventListener("submit", async (event) => {
     event.preventDefault();
