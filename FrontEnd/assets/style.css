@@ -142,6 +142,9 @@ body {
   font-family: "Work Sans";
   font-size: 14px;
   background-color: var(--tertiary-color);
+  /*
+  overflow: hidden;
+  */
 }
 main {
   max-width: 1140px;
@@ -241,7 +244,6 @@ nav ul {
   margin-bottom: 0.5em;
 }
 /***** Portfolio *****/
-
 .portfolio__title {
   display: flex;
   justify-content: center;
@@ -290,6 +292,79 @@ nav ul {
 .gallery img {
   width: 100%;
 }
+/***** Portfolio-dashboard *****/
+#portfolio-dashbord {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.302);
+  scroll-behavior: unset;
+}
+.dashbord__interface {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 43rem;
+  width: 39.375rem;
+  background-color: white;
+  border-radius: 10px;
+}
+.dashbord__title {
+  padding-top: 3.75rem;
+  font-family: "Work Sans";
+  font-size: 1.625rem;
+}
+.dashbord__interface .close-logo {
+  position: absolute;
+  top: 32px;
+  right: 36px;
+  font-size: larger;
+}
+.dashbord__content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.562rem;
+  max-width: 420px;
+  margin-top: 2.875rem;
+}
+.dashbord__content--works {
+  position: relative;
+}
+.dashbord__content--works .trash-logo {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  font-size: smaller;
+  color: white;
+  background-color: black;
+  padding: 3px;
+  border-radius: 3px;
+}
+.dashbord__content img {
+  width: 76.86px;
+  height: 102.57px;
+}
+.dashbord__underline {
+  margin-top: 4.2rem;
+  width: 420px;
+  border: 1px solid black;
+}
+.dashbord__cta {
+  font-family: "Syne";
+  color: white;
+  border: none;
+  border-radius: 60px;
+  margin-top: 2.375rem;
+  padding: 0.625rem 3.06rem;
+  background-color: var(--secondary-color);
+}
+
 #contact {
   width: 50%;
   margin: auto;
