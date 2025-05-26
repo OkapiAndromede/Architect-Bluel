@@ -257,6 +257,7 @@ nav ul {
 }
 .portfolio__title .editor__txt {
   font-size: 1rem;
+  cursor: pointer;
 }
 .portfolio__title .fa-regular {
   font-size: 1rem;
@@ -294,6 +295,7 @@ nav ul {
 }
 /***** Portfolio-dashboard *****/
 #portfolio-dashbord {
+  visibility: hidden;
   position: fixed;
   top: 0;
   left: 0;
@@ -325,10 +327,12 @@ nav ul {
   top: 32px;
   right: 36px;
   font-size: larger;
+  cursor: pointer;
 }
 .dashbord__content {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   gap: 0.562rem;
   max-width: 420px;
   margin-top: 2.875rem;
@@ -345,6 +349,7 @@ nav ul {
   background-color: black;
   padding: 3px;
   border-radius: 3px;
+  cursor: pointer;
 }
 .dashbord__content img {
   width: 76.86px;

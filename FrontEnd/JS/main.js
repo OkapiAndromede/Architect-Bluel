@@ -16,8 +16,12 @@ const category = await responseCategoryServer.json();
 //Déclaration des variables globales
 let isAuthenticated = !!localStorage.getItem("editorToken");
 //Récupération des éléments du DOM
+const body = document.body;
 const divFilter = document.querySelector(".portfolio__filter");
 const baliseLogStatus = document.getElementById("log-status");
+const tagModificator = document.getElementById("open-dashbord");
+const asideDashbord = document.getElementById("portfolio-dashbord");
+const dashbordCross = document.querySelector(".close-logo");
 //Supression des travaux encodé nativement dans le HTML
 document.querySelector(".gallery").innerHTML = ``;
 //Génération des travaux de façon dynamique
@@ -56,4 +60,36 @@ if (btnFilter) {
       }
     });
   }
+}
+
+if (isAuthenticated) {
+  //Génération des travaux dans le dashbord
+  for (let i = 0; i < works.length; i++) {
+    const project = works[i];
+    //Récupération de l'élément DOM qui accueillera les images de travaux
+    const divDashbordContent = document.querySelector(".dashbord__content");
+    //Création de la balise dédié à un projet
+    const projectElement = document.createElement("div");
+    projectElement.classList.add("dashbord__content--works");
+    //Création de la balise image d'un projet
+    const imageElement = document.createElement("img");
+    imageElement.src = project.imageUrl;
+    imageElement.alt = project.title;
+    //Création de la balise avec le logo poubelle
+    const deleteElement = document.createElement("i");
+    deleteElement.classList.add("fa-solid", "fa-trash-can", "trash-logo");
+    //Ajout de tous nos éléments
+    divDashbordContent.appendChild(projectElement);
+    projectElement.appendChild(imageElement);
+    projectElement.appendChild(deleteElement);
+  }
+  tagModificator.addEventListener("click", () => {
+    asideDashbord.style.visibility = "visible";
+    body.style.overflow = "hidden";
+  });
+
+  dashbordCross.addEventListener("click", () => {
+    asideDashbord.style.visibility = "hidden";
+    body.style.overflow = "auto";
+  });
 }
