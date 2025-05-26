@@ -3,7 +3,10 @@ import {
   filtersGenerator,
   removeEditorStyle,
   displayEditorStyle,
+  worksDashbordGenerator,
 } from "./dom.js";
+
+import { dataWorks } from "./api.js";
 
 //Importation des travaux depuis le serveur
 const responseWorkServer = await fetch("http://localhost:5678/api/works");
@@ -22,6 +25,9 @@ const baliseLogStatus = document.getElementById("log-status");
 const tagModificator = document.getElementById("open-dashbord");
 const asideDashbord = document.getElementById("portfolio-dashbord");
 const dashbordCross = document.querySelector(".close-logo");
+const leftArrowIcon = document.querySelector(".arrow-logo");
+const dashbordContent = document.querySelector(".dashbord__content");
+const btnDashbordCta = document.querySelector(".dashbord__cta");
 //Supression des travaux encodé nativement dans le HTML
 document.querySelector(".gallery").innerHTML = ``;
 //Génération des travaux de façon dynamique
@@ -64,32 +70,78 @@ if (btnFilter) {
 
 if (isAuthenticated) {
   //Génération des travaux dans le dashbord
-  for (let i = 0; i < works.length; i++) {
-    const project = works[i];
-    //Récupération de l'élément DOM qui accueillera les images de travaux
-    const divDashbordContent = document.querySelector(".dashbord__content");
-    //Création de la balise dédié à un projet
-    const projectElement = document.createElement("div");
-    projectElement.classList.add("dashbord__content--works");
-    //Création de la balise image d'un projet
-    const imageElement = document.createElement("img");
-    imageElement.src = project.imageUrl;
-    imageElement.alt = project.title;
-    //Création de la balise avec le logo poubelle
-    const deleteElement = document.createElement("i");
-    deleteElement.classList.add("fa-solid", "fa-trash-can", "trash-logo");
-    //Ajout de tous nos éléments
-    divDashbordContent.appendChild(projectElement);
-    projectElement.appendChild(imageElement);
-    projectElement.appendChild(deleteElement);
-  }
+  worksDashbordGenerator(works);
+
+  //Ouverture du dashboard
   tagModificator.addEventListener("click", () => {
     asideDashbord.style.visibility = "visible";
     body.style.overflow = "hidden";
   });
 
+  //Fermeture du dashboard
   dashbordCross.addEventListener("click", () => {
     asideDashbord.style.visibility = "hidden";
     body.style.overflow = "auto";
+  });
+  asideDashbord.addEventListener("click", () => {
+    asideDashbord.style.visibility = "hidden";
+    body.style.overflow = "auto";
+  });
+
+  //Récupération et écoute des logo poubelles
+  const trashLogo = document.querySelectorAll(".trash-logo");
+  trashLogo.forEach((logo) => {
+    logo.addEventListener("click", async (event) => {
+      try {
+        //Effacement du travail de la base de donnée
+        const workID = event.currentTarget.id;
+        const token = localStorage.getItem("editorToken");
+        const responseServeur = await fetch(
+          `http://localhost:5678/api/works/${workID}`,
+          {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        console.log(responseServeur);
+        //Updtate des données du serveur
+        const worksUpdate = await dataWorks();
+        //Mise à jour des travaux de la modale
+        dashbordContent.innerHTML = ``;
+        worksDashbordGenerator(worksUpdate);
+        //Mise à jour des travaux encodés nativement dans le html
+        document.querySelector(".gallery").innerHTML = ``;
+        worksGenerator(worksUpdate);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  });
+
+  //Ecoute du bouton "Ajouter une photo"
+  btnDashbordCta.addEventListener("click", (event) => {
+    //Evite que le click ne se propage plus loin et ferme la modale
+    event.stopPropagation();
+    //Modification du visuel de la modale
+    const dashboardTitle = document.querySelector(".dashbord__title");
+    const dashboardForm = document.querySelector(".dashbord__form");
+
+    leftArrowIcon.classList.remove("hidden");
+    dashboardTitle.innerText = "Ajout photo";
+    dashbordContent.classList.add("hidden");
+    dashboardForm.classList.remove("hidden");
+  });
+
+  leftArrowIcon.addEventListener("click", (event) => {
+    //Evite que le click ne se propage plus loin et ferme la modale
+    event.stopPropagation();
+    //Modification du visuel de la modale
+    const dashboardTitle = document.querySelector(".dashbord__title");
+    const dashboardForm = document.querySelector(".dashbord__form");
+
+    leftArrowIcon.classList.add("hidden");
+    dashboardTitle.innerText = "Galerie photo";
+    dashbordContent.classList.remove("hidden");
+    dashboardForm.classList.add("hidden");
   });
 }

@@ -160,17 +160,27 @@
           <div class="dashbord__interface">
             <h3 class="dashbord__title">Galerie photo</h3>
             <i class="fa-solid fa-xmark close-logo"></i>
-            <div class="dashbord__content">
-              <!--
-              <div class="dashbord__content--works">
-                <img
-                  src="assets/images/abajour-tahina.png"
-                  alt="abajour-tahina"
+            <i class="fa-solid fa-arrow-left arrow-logo hidden"></i>
+            <div class="dashbord__content"></div>
+            <form class="dashbord__form hidden" method="post" action="#">
+              <div class="dashbord__form--preview">
+                <i class="fa-regular fa-image picture-logo"></i>
+                <input
+                  class="hidden"
+                  type="file"
+                  accept="image/png image/jpg"
+                  name="file"
                 />
-                <i class="fa-solid fa-trash-can trash-logo"></i>
+                <button type="button" id="btn__upload--picture">
+                  + Ajouter une photo
+                </button>
+                <p class="preview__txt">jpg, png : 4mo max</p>
               </div>
-              -->
-            </div>
+              <label for="title-project"> Titre </label> <br />
+              <input type="text" name="title" id="title-project" /> <br />
+              <label for="category-project">Catégorie</label> <br />
+              <input type="text" name="category" id="category-project" /><br />
+            </form>
             <div class="dashbord__underline"></div>
             <button class="dashbord__cta">Ajouter une photo</button>
           </div>

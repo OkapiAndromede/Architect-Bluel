@@ -78,3 +78,26 @@ export function displayEditorStyle(hasToken) {
     });
   }
 }
+
+export function worksDashbordGenerator(works) {
+  for (let i = 0; i < works.length; i++) {
+    const project = works[i];
+    //Récupération de l'élément DOM qui accueillera les images de travaux
+    const divDashbordContent = document.querySelector(".dashbord__content");
+    //Création de la balise dédié à un projet
+    const projectElement = document.createElement("div");
+    projectElement.classList.add("dashbord__content--works");
+    //Création de la balise image d'un projet
+    const imageElement = document.createElement("img");
+    imageElement.src = project.imageUrl;
+    imageElement.alt = project.title;
+    //Création de la balise avec le logo poubelle
+    const deleteElement = document.createElement("i");
+    deleteElement.classList.add("fa-solid", "fa-trash-can", "trash-logo");
+    deleteElement.id = project.id;
+    //Ajout de tous nos éléments
+    divDashbordContent.appendChild(projectElement);
+    projectElement.appendChild(imageElement);
+    projectElement.appendChild(deleteElement);
+  }
+}
