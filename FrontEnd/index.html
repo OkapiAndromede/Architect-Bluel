@@ -162,14 +162,20 @@
             <i class="fa-solid fa-xmark close-logo"></i>
             <i class="fa-solid fa-arrow-left arrow-logo hidden"></i>
             <div class="dashbord__content"></div>
-            <form class="dashbord__form hidden" method="post" action="#">
+            <form
+              id="form"
+              class="dashbord__form hidden"
+              method="post"
+              action="#"
+            >
               <div class="dashbord__form--preview">
                 <i class="fa-regular fa-image picture-logo"></i>
                 <input
                   class="hidden"
                   type="file"
                   accept="image/png image/jpg"
-                  name="file"
+                  name="image"
+                  id="input__picture"
                 />
                 <button type="button" id="btn__upload--picture">
                   + Ajouter une photo
@@ -179,9 +185,19 @@
               <label for="title-project"> Titre </label> <br />
               <input type="text" name="title" id="title-project" /> <br />
               <label for="category-project">Catégorie</label> <br />
-              <input type="text" name="category" id="category-project" /><br />
+              <select name="category" id="category-project">
+                <option value="" disabled selected>
+                  -- Sélectionner une catégorie --
+                </option>
+              </select>
+              <i class="fa-solid fa-chevron-down"></i>
+              <br />
+              <div class="dashbord__underline"></div>
+              <div id="container-cta">
+                <button type="submit" id="form-cta">Valider</button>
+              </div>
             </form>
-            <div class="dashbord__underline"></div>
+            <div id="gallery-underline" class="dashbord__underline"></div>
             <button class="dashbord__cta">Ajouter une photo</button>
           </div>
         </aside>

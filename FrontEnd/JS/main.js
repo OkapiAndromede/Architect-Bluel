@@ -87,7 +87,11 @@ if (isAuthenticated) {
     asideDashbord.style.visibility = "hidden";
     body.style.overflow = "auto";
   });
-
+  const dashboardInterface = document.querySelector(".dashbord__interface");
+  dashboardInterface.addEventListener("click", (event) => {
+    //Evite que le click se propage dans la balise aside et ferme la modale
+    event.stopPropagation();
+  });
   //Récupération et écoute des logo poubelles
   const trashLogo = document.querySelectorAll(".trash-logo");
   trashLogo.forEach((logo) => {
@@ -120,28 +124,114 @@ if (isAuthenticated) {
 
   //Ecoute du bouton "Ajouter une photo"
   btnDashbordCta.addEventListener("click", (event) => {
-    //Evite que le click ne se propage plus loin et ferme la modale
-    event.stopPropagation();
     //Modification du visuel de la modale
     const dashboardTitle = document.querySelector(".dashbord__title");
     const dashboardForm = document.querySelector(".dashbord__form");
+    const galleryUnderline = document.getElementById("gallery-underline");
 
     leftArrowIcon.classList.remove("hidden");
     dashboardTitle.innerText = "Ajout photo";
     dashbordContent.classList.add("hidden");
+    galleryUnderline.classList.add("hidden");
+    btnDashbordCta.classList.add("hidden");
     dashboardForm.classList.remove("hidden");
   });
 
   leftArrowIcon.addEventListener("click", (event) => {
-    //Evite que le click ne se propage plus loin et ferme la modale
-    event.stopPropagation();
     //Modification du visuel de la modale
     const dashboardTitle = document.querySelector(".dashbord__title");
     const dashboardForm = document.querySelector(".dashbord__form");
+    const galleryUnderline = document.getElementById("gallery-underline");
 
     leftArrowIcon.classList.add("hidden");
     dashboardTitle.innerText = "Galerie photo";
     dashbordContent.classList.remove("hidden");
+    galleryUnderline.classList.remove("hidden");
+    btnDashbordCta.classList.remove("hidden");
     dashboardForm.classList.add("hidden");
+  });
+  //Récupération des éléments du formulaire
+  const inputPhoto = document.getElementById("input__picture");
+  const btnUpload = document.getElementById("btn__upload--picture");
+  const logoPreview = document.querySelector(".picture-logo");
+  const txtPreview = document.querySelector(".preview__txt");
+  const inputTitle = document.getElementById("title-project");
+  const inputCategory = document.getElementById("category-project");
+
+  //Listening du bouton "Ajouter une photo" du formulaire
+  btnUpload.addEventListener("click", (event) => {
+    inputPhoto.click();
+  });
+
+  //Affichage de la photo uploader
+  inputPhoto.addEventListener("change", () => {
+    const photoFile = inputPhoto.files[0];
+    if (photoFile) {
+      inputTitle.value = photoFile.name;
+      //Affichage de l'image dans une balise img
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const imgPreview = document.createElement("img");
+        imgPreview.src = event.target.result;
+        imgPreview.alt = "Aperçu de l'image chargée";
+        //On cache les anciens éléments pour afficher correctement l'image
+        btnUpload.classList.add("hidden");
+        logoPreview.classList.add("hidden");
+        txtPreview.classList.add("hidden");
+        document
+          .querySelector(".dashbord__form--preview")
+          .appendChild(imgPreview);
+      };
+      reader.readAsDataURL(photoFile);
+    }
+  });
+  //Génération des options de façon dynamique
+  const selectCategory = document.getElementById("category-project");
+
+  category.forEach((element) => {
+    //Création d'une balise "option"
+    const tagOption = document.createElement("option");
+    tagOption.value = element.id;
+    tagOption.textContent = element.name;
+    selectCategory.appendChild(tagOption);
+  });
+  //Listening du formulaire
+  const form = document.getElementById("form");
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem("editorToken");
+    //Création d'un objet formData à partir de notre formulaire
+    const form = event.target;
+    const formData = new FormData(form);
+
+    console.log("Fichier sélectionné :", formData.get("image"));
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key} :`, value);
+    }
+
+    try {
+      const responseServer = await fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+
+      if (!responseServer.ok) {
+        throw new Error("Erreur lors de l'envoie des données");
+      }
+      const data = await responseServer.json();
+      console.log("Succès", data);
+      //Updtate des données du serveur
+      const worksUpdate = await dataWorks();
+      //Mise à jour des travaux de la modale
+      dashbordContent.innerHTML = ``;
+      worksDashbordGenerator(worksUpdate);
+      //Mise à jour des travaux encodés nativement dans le html
+      document.querySelector(".gallery").innerHTML = ``;
+      worksGenerator(worksUpdate);
+    } catch (error) {
+      console.error("Erreur", error);
+    }
   });
 }
