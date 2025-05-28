@@ -1,5 +1,6 @@
 //Fichier qui regroupe des fonctions utilitaires (filtres)
-
+import { worksDashbordGenerator, worksGenerator } from "./dom.js";
+import { dataWorks } from "./api.js";
 /**
  * La fonction envoie les information de logIn en format JSON à l'API (POST)
  * @param {string} emailLog : l'email de l'utilisateur
@@ -34,8 +35,11 @@ export function removeSpaces(text) {
   let texteSansEspace = text.replaceAll(/\s+/g, "");
   return texteSansEspace;
 }
-// Cette fonction affiche le popup en changeant la class
-// Passe de "inactive" à "active"
+
+/**
+ * La fonction affiche le popUp
+ * Change la class "inactive" vers "active"
+ */
 export function displayPopUp() {
   const divPopup = document.querySelector(".popup");
   const textErrorConteneur = document.querySelector(".popup__txt");
@@ -46,10 +50,36 @@ export function displayPopUp() {
   divPopup.classList.remove("inactive");
   divPopup.classList.add("active");
 }
-//Cette fonction masque le popUp en changeant la class
-// Passe de "active" à "inactive"
+
+/**
+ * La fonction masque le popUp
+ * Change la class "active" vers "inactive"
+ */
 export function closePopUp() {
   const divPopup = document.querySelector(".popup");
   divPopup.classList.remove("active");
   divPopup.classList.add("inactive");
+}
+
+export function updateWorksDashboard(worksUpdate) {
+  const dashbordContent = document.querySelector(".dashbord__content");
+  dashbordContent.innerHTML = ``;
+  worksDashbordGenerator(worksUpdate);
+}
+
+export function updateWorksGallery(worksUpdate) {
+  document.querySelector(".gallery").innerHTML = ``;
+  worksGenerator(worksUpdate);
+}
+
+export function clearInputForm() {
+  const inputImage = document.getElementById("input__picture");
+  const imgBox = document.getElementById("loaded__img");
+  const inputTitle = document.getElementById("title-project");
+  const inputOptionCategory = document.getElementById("category-project");
+
+  inputImage.value = "";
+  imgBox.remove();
+  inputTitle.value = "";
+  inputOptionCategory.value = "";
 }

@@ -101,3 +101,113 @@ export function worksDashbordGenerator(works) {
     projectElement.appendChild(deleteElement);
   }
 }
+/**
+ * La fonction permet d'afficher l'interface pour l'ajout de projet
+ */
+export function displayAddProjectInterface() {
+  //Récupération des éléments du DOM
+  const dashboardTitle = document.querySelector(".dashbord__title");
+  const dashboardForm = document.querySelector(".dashbord__form");
+  const dashbordContent = document.querySelector(".dashbord__content");
+  const galleryUnderline = document.getElementById("gallery-underline");
+  const leftArrowIcon = document.querySelector(".arrow-logo");
+  const btnDashbordCta = document.querySelector(".dashbord__cta");
+
+  //Modification du visuel avec la class "hidden"
+  leftArrowIcon.classList.remove("hidden");
+  dashboardTitle.innerText = "Ajout photo";
+  dashbordContent.classList.add("hidden");
+  galleryUnderline.classList.add("hidden");
+  btnDashbordCta.classList.add("hidden");
+  dashboardForm.classList.remove("hidden");
+}
+/**
+ * La fonction permet d'afficher l'interface pour la supression de projet
+ */
+export function displayRemoveProjectInterface() {
+  //Récupération des éléments du DOM
+  const dashboardTitle = document.querySelector(".dashbord__title");
+  const dashboardForm = document.querySelector(".dashbord__form");
+  const dashbordContent = document.querySelector(".dashbord__content");
+  const galleryUnderline = document.getElementById("gallery-underline");
+  const leftArrowIcon = document.querySelector(".arrow-logo");
+  const btnDashbordCta = document.querySelector(".dashbord__cta");
+
+  //Modification du visuel avec la class "hidden"
+  leftArrowIcon.classList.add("hidden");
+  dashboardTitle.innerText = "Galerie photo";
+  dashbordContent.classList.remove("hidden");
+  galleryUnderline.classList.remove("hidden");
+  btnDashbordCta.classList.remove("hidden");
+  dashboardForm.classList.add("hidden");
+}
+/**
+ * La fonction permet de cacher les éléments présent avant l'import de la photo
+ */
+export function hideOldPreviewElement() {
+  //Récupération des éléments du DOM
+  const btnUpload = document.getElementById("btn__upload--picture");
+  const logoPreview = document.querySelector(".picture-logo");
+  const txtPreview = document.querySelector(".preview__txt");
+
+  //Modification du visuel avec la class "hidden"
+  btnUpload.classList.add("hidden");
+  logoPreview.classList.add("hidden");
+  txtPreview.classList.add("hidden");
+}
+
+export function displayOldPreviewElement() {
+  //Récupération des éléments du DOM
+  const btnUpload = document.getElementById("btn__upload--picture");
+  const logoPreview = document.querySelector(".picture-logo");
+  const txtPreview = document.querySelector(".preview__txt");
+
+  //Modification du visuel en retirant la class "hidden"
+  btnUpload.classList.remove("hidden");
+  logoPreview.classList.remove("hidden");
+  txtPreview.classList.remove("hidden");
+}
+
+/**
+ * La fonction permet d'attribuer le titre de la photo chargée
+ * @param {string} fileName : variable contenant le nom du fichier chargé
+ */
+export function setPhotoTitle(fileName) {
+  const inputTitle = document.getElementById("title-project");
+  inputTitle.value = fileName;
+}
+
+/**
+ * La fonction affiche l'image téléchargée pour l'ajout d'un travail
+ * @param {File} file : Fichier image à afficher provenant d'un input de type "file"
+ */
+export function displayImagePreview(file) {
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    const imgPreview = document.createElement("img");
+    imgPreview.src = event.target.result;
+    imgPreview.alt = "Aperçu de l'image chargée";
+    imgPreview.id = "loaded__img";
+    document.querySelector(".dashbord__form--preview").appendChild(imgPreview);
+  };
+  reader.readAsDataURL(file);
+}
+
+/**
+ * La fonction génére des élements <option> dans un menu déroulant
+ * à partir des catégories de la base de données
+ * @param {Array <{id : number, name : string}>} dataCategory : Tableau d'objet JS des catégories
+ * id : identifiant de la catégorie
+ * name : nom de la catégorie
+ */
+export function categoryOptionGenerator(dataCategory) {
+  const selectCategory = document.getElementById("category-project");
+
+  dataCategory.forEach((element) => {
+    //Création d'une balise "option"
+    const tagOption = document.createElement("option");
+    tagOption.value = element.id;
+    tagOption.textContent = element.name;
+    selectCategory.appendChild(tagOption);
+  });
+}
