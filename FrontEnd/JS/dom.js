@@ -58,7 +58,7 @@ export function logOut(hasToken) {
   }
 }
 /**
- * La fonction modifie la propriété "display" des balise "editor__mode"
+ * La fonction cache le style lié au mode édition
  * @param {boolean} hasToken : la variable indiquant la présence du token
  */
 export function removeEditorStyle(hasToken) {
@@ -69,7 +69,10 @@ export function removeEditorStyle(hasToken) {
     });
   }
 }
-
+/**
+ * La fonction affiche le style lié au mode édition
+ * @param {boolean} hasToken : la variable indiquant la présence du token
+ */
 export function displayEditorStyle(hasToken) {
   const editorConteneur = document.querySelectorAll(".editor__mode");
   if (hasToken) {
@@ -78,7 +81,10 @@ export function displayEditorStyle(hasToken) {
     });
   }
 }
-
+/**
+ * La fonction génère les travaux de l'architecte au niveau de la modale
+ * @param {Array} works : un tableau d'objet JS avec les travaux de l'architecte
+ */
 export function worksDashbordGenerator(works) {
   for (let i = 0; i < works.length; i++) {
     const project = works[i];
@@ -155,7 +161,9 @@ export function hideOldPreviewElement() {
   logoPreview.classList.add("hidden");
   txtPreview.classList.add("hidden");
 }
-
+/**
+ * La fonction affiche les éléments présent avant l'import de la photo
+ */
 export function displayOldPreviewElement() {
   //Récupération des éléments du DOM
   const btnUpload = document.getElementById("btn__upload--picture");
