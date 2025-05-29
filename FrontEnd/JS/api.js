@@ -30,3 +30,19 @@ export async function postDataWork(formData, token) {
   });
   return responseServer;
 }
+/**
+ *
+ * @param {number} workID : L'identifiant associé à un projet
+ * @param {string} token : Le token d'identification obtenu lors du logIn
+ * @returns {Promise<Response>} : la réponse brut du serveur (objet Response)
+ */
+export async function deleteDataWork(workID, token) {
+  const responseServer = await fetch(
+    `http://localhost:5678/api/works/${workID}`,
+    {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+  return responseServer;
+}

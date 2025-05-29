@@ -13,7 +13,7 @@ import {
   categoryOptionGenerator,
 } from "./dom.js";
 
-import { dataWorks, postDataWork } from "./api.js";
+import { dataWorks, postDataWork, deleteDataWork } from "./api.js";
 import {
   updateWorksDashboard,
   updateWorksGallery,
@@ -40,16 +40,15 @@ const dashbordCross = document.querySelector(".close-logo");
 const leftArrowIcon = document.querySelector(".arrow-logo");
 const dashbordContent = document.querySelector(".dashbord__content");
 const btnDashbordCta = document.querySelector(".dashbord__cta");
-//Supression des travaux encodé nativement dans le HTML
-document.querySelector(".gallery").innerHTML = ``;
+
 //Génération des travaux de façon dynamique
-worksGenerator(works);
+updateWorksGallery(works);
 
 const categoryName = category.map((element) => element.name);
 //Unshift() est une méthode qui ajoute un élément au début d'un tableau
 categoryName.unshift("Tous");
-//Mise à jour de l'affichage en fonction du statut d'authentification
 
+//Mise à jour de l'affichage en fonction du statut d'authentification
 if (!isAuthenticated) {
   filtersGenerator(categoryName);
   removeEditorStyle(isAuthenticated);
@@ -58,26 +57,30 @@ if (!isAuthenticated) {
   displayEditorStyle(isAuthenticated);
   baliseLogStatus.innerText = "logout";
 }
+
 //Programme permettant de filter les travaux en fonction du filtre sélectionné
 const btnFilter = document.querySelectorAll(".portfolio__filter button");
 if (btnFilter) {
-  for (let i = 0; i < btnFilter.length; i++) {
-    btnFilter[i].addEventListener("click", (event) => {
+  btnFilter.forEach((button) =>
+    button.addEventListener("click", (event) => {
+      //Modification du style du bouton sélectionné
       btnFilter.forEach((btn) => btn.classList.remove("selected"));
-
       event.target.classList.add("selected");
+      //Filtre de l'objet "works" pour extraire les noms de catégories
       const worksFiltered = works.filter((projet) => {
         return projet.category.name === event.target.innerText;
       });
-      document.querySelector(".gallery").innerHTML = ``;
 
+      //Effacement des travaux affichés dans la galerie
+      document.querySelector(".gallery").innerHTML = ``;
+      //Génération des travaux de la galerie en fonction du filtre sélectionné
       if (event.target.innerText !== "Tous") {
         worksGenerator(worksFiltered);
       } else {
         worksGenerator(works);
       }
-    });
-  }
+    })
+  );
 }
 
 if (isAuthenticated) {
@@ -107,44 +110,32 @@ if (isAuthenticated) {
     event.stopPropagation();
   });
 
-  //Récupération et écoute des logo poubelles
-  const trashLogo = document.querySelectorAll(".trash-logo");
-  trashLogo.forEach((logo) => {
-    logo.addEventListener("click", async (event) => {
+  //Ecoute du contenu de la modale
+  dashbordContent.addEventListener("click", async (event) => {
+    if (event.target.classList.contains("trash-logo")) {
       try {
-        //Effacement du travail de la base de donnée
-        const workID = event.currentTarget.id;
+        //Récupération de l'ID du travail et du token administrateur
+        const workID = event.target.id;
         const token = localStorage.getItem("editorToken");
-        const responseServeur = await fetch(
-          `http://localhost:5678/api/works/${workID}`,
-          {
-            method: "DELETE",
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const responseServeur = await deleteDataWork(workID, token);
         console.log(responseServeur);
         //Updtate des données du serveur
         const worksUpdate = await dataWorks();
-        //Mise à jour des travaux de la modale
-        dashbordContent.innerHTML = ``;
-        worksDashbordGenerator(worksUpdate);
-        //Mise à jour des travaux encodés nativement dans le html
-        document.querySelector(".gallery").innerHTML = ``;
-        worksGenerator(worksUpdate);
+        updateWorksDashboard(worksUpdate);
+        updateWorksGallery(worksUpdate);
       } catch (error) {
         console.log(error);
       }
-    });
+    }
   });
 
   //Ecoute du bouton "Ajouter une photo"
-  btnDashbordCta.addEventListener("click", (event) => {
+  btnDashbordCta.addEventListener("click", () => {
     displayAddProjectInterface();
   });
 
   //Ecoute de la flèche de retour de l'interface
-  leftArrowIcon.addEventListener("click", (event) => {
-    //Modification du visuel de la modale : affichage de la phase 1
+  leftArrowIcon.addEventListener("click", () => {
     displayRemoveProjectInterface();
   });
 
