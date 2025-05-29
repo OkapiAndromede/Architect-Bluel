@@ -60,18 +60,26 @@ export function closePopUp() {
   divPopup.classList.remove("active");
   divPopup.classList.add("inactive");
 }
-
+/**
+ * La fonction efface le contenu de la modale et affiche les travaux à jour
+ * @param {Array} worksUpdate : Tableau d'objet JS avec les données mis à jour des travaux
+ */
 export function updateWorksDashboard(worksUpdate) {
   const dashbordContent = document.querySelector(".dashbord__content");
   dashbordContent.innerHTML = ``;
   worksDashbordGenerator(worksUpdate);
 }
-
+/**
+ * La fonction efface le contenu de la gallerie de travaux et affiche les travaux à jour
+ * @param {Array} worksUpdate : Tableau d'objet JS avec les données mis à jour des travaux
+ */
 export function updateWorksGallery(worksUpdate) {
   document.querySelector(".gallery").innerHTML = ``;
   worksGenerator(worksUpdate);
 }
-
+/**
+ * La fonction vide les valeurs des inputs du formulaire et enlève l'image affichée
+ */
 export function clearInputForm() {
   const inputImage = document.getElementById("input__picture");
   const imgBox = document.getElementById("loaded__img");
