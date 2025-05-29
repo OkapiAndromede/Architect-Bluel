@@ -418,7 +418,7 @@ nav ul {
 }
 .dashbord__form--preview img {
   width: 129px;
-  height: 180px;
+  height: 169px;
 }
 #btn__upload--picture {
   margin-top: 0.375rem;
@@ -461,9 +461,9 @@ nav ul {
   margin-right: 1rem;
 }
 .fa-chevron-down {
-  position: absolute;
-  right: 130px;
-  top: 67%;
+  position: fixed;
+  right: 38%;
+  top: 62%;
   color: #6c6c6c;
 }
 #contact {
