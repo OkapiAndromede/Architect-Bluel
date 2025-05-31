@@ -42,6 +42,7 @@ export async function dataCategory() {
  * @param {FormData} formData : Objet de type FormData, il doit inclure
  * - image {File} : le fichier image (jpeg,png) du travail
  * - title {string} : le titre associé à l'image du travail
+ * - catégorie {string} : la catégorie associé à l'image du travail
  * @param {string} token : Le token d'identification obtenu lors du logIn
  * @returns {Promise<Response>} : une promesse qui fournit la réponse brut du serveur (objet Response)
  */

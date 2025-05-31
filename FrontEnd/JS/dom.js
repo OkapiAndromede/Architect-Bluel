@@ -219,3 +219,39 @@ export function categoryOptionGenerator(dataCategory) {
     selectCategory.appendChild(tagOption);
   });
 }
+/**
+ * La fonction active visuellement et factuellement le btn du formulaire
+ */
+export function activateBtnSubmit() {
+  const btnSubmitForm = document.getElementById("form-cta");
+
+  btnSubmitForm.style.backgroundColor = " #1d6154";
+  btnSubmitForm.style.cursor = "pointer";
+}
+/**
+ * La fonction désactive visuellement et factuellement le btn du formulaire
+ */
+export function desactivateBtnSubmit() {
+  const btnSubmitForm = document.getElementById("form-cta");
+
+  btnSubmitForm.style.backgroundColor = " #a7a7a7";
+  btnSubmitForm.style.cursor = "not-allowed";
+}
+/**
+ *
+ * @param {boolean} inputImgLoadedStatus : le status de complétion de l'image
+ * @param {boolean} inputTitleStatus : le status de complétion du titre de l'image
+ * @param {boolean} inputOptionCategory : le status du choix de la catégorie
+ * @returns {void} : Appel la fct° "activateBtnSubmit" ou "desactivateBtnSubmit"
+ */
+export function checkFormStatus(
+  inputImgLoadedStatus,
+  inputTitleStatus,
+  inputOptionCategory
+) {
+  if (inputImgLoadedStatus && inputTitleStatus && inputOptionCategory) {
+    activateBtnSubmit();
+  } else {
+    desactivateBtnSubmit();
+  }
+}

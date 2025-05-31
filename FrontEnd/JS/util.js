@@ -91,3 +91,11 @@ export function clearInputForm() {
   inputTitle.value = "";
   inputOptionCategory.value = "";
 }
+/**
+ * La fonction permet de nettoyer le nom du fichier de son exention (image)
+ * @param {string} filename : le nom du fichier téléchargé
+ * @returns filename sans l'exention ".png" et ".jpg"
+ */
+export function removeImageExtension(filename) {
+  return filename.replace(/\.(png|jpg)$/i, ``);
+}

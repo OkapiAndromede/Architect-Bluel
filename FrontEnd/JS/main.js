@@ -11,6 +11,9 @@ import {
   setPhotoTitle,
   displayImagePreview,
   categoryOptionGenerator,
+  activateBtnSubmit,
+  desactivateBtnSubmit,
+  checkFormStatus,
 } from "./dom.js";
 
 import { dataWorks, postDataWork, deleteDataWork } from "./api.js";
@@ -18,16 +21,19 @@ import {
   updateWorksDashboard,
   updateWorksGallery,
   clearInputForm,
+  removeImageExtension,
 } from "./util.js";
 
 //Importation des travaux depuis le serveur
 const responseWorkServer = await fetch("http://localhost:5678/api/works");
 const works = await responseWorkServer.json();
+
 //Importation des catégorie depuis le serveur
 const responseCategoryServer = await fetch(
   "http://localhost:5678/api/categories"
 );
 const category = await responseCategoryServer.json();
+
 //Déclaration des variables globales
 let isAuthenticated = !!localStorage.getItem("editorToken");
 //Récupération des éléments du DOM
@@ -142,6 +148,12 @@ if (isAuthenticated) {
   //Récupération des éléments du formulaire
   const inputPhoto = document.getElementById("input__picture");
   const btnUpload = document.getElementById("btn__upload--picture");
+  const inputOptionCategory = document.getElementById("category-project");
+
+  //Déclaration des booléens associés aux inputs du formulaire
+  let inputImgLoadedStatus = false;
+  let inputTitleStatus = false;
+  let inputOptionCategoryStatus = false;
 
   //Listening du bouton "Ajouter une photo" du formulaire
   btnUpload.addEventListener("click", () => {
@@ -152,17 +164,40 @@ if (isAuthenticated) {
   inputPhoto.addEventListener("change", () => {
     const photoFile = inputPhoto.files[0];
     if (photoFile) {
-      setPhotoTitle(photoFile.name);
+      const titleImage = removeImageExtension(photoFile.name);
+      setPhotoTitle(titleImage);
       hideOldPreviewElement();
       displayImagePreview(photoFile);
+      inputImgLoadedStatus = true;
+      inputTitleStatus = true;
+      checkFormStatus(
+        inputImgLoadedStatus,
+        inputTitleStatus,
+        inputOptionCategoryStatus
+      );
     }
   });
 
   //Génération des options de façon dynamique
   categoryOptionGenerator(category);
 
-  //Listening du formulaire
+  //Listening du choix de la catégorie
+  inputOptionCategory.addEventListener("change", () => {
+    const selectedCategory = inputOptionCategory.value;
+    if (selectedCategory !== "0") {
+      inputOptionCategoryStatus = true;
+    }
+    checkFormStatus(
+      inputImgLoadedStatus,
+      inputTitleStatus,
+      inputOptionCategoryStatus
+    );
+  });
+
+  //Récupération des inputs du formulaire
   const form = document.getElementById("form");
+
+  //Listening du formulaire
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -191,6 +226,7 @@ if (isAuthenticated) {
         updateWorksGallery(worksUpdate);
         clearInputForm();
         displayOldPreviewElement();
+        desactivateBtnSubmit();
       } catch (error) {
         console.error("Erreur", error);
       }
