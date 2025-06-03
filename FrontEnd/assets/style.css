@@ -383,7 +383,7 @@ nav ul {
   margin-top: 2.375rem;
   padding: 0.625rem 3.06rem;
   background-color: #a7a7a7;
-  cursor: pointer;
+  cursor: not-allowed;
 }
 #container-cta {
   display: flex;
@@ -459,11 +459,13 @@ nav ul {
   width: 27.4rem;
   margin-bottom: 2.937rem;
   margin-right: 1rem;
+  cursor: pointer;
 }
+
 .fa-chevron-down {
-  position: fixed;
-  right: 38%;
-  top: 62%;
+  display: inline-block;
+  position: relative;
+  right: 50px;
   color: #6c6c6c;
 }
 #contact {
