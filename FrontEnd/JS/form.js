@@ -22,7 +22,9 @@ if (baliseForm) {
     // Déclaration des variables globales
     let serverResponse = undefined;
     //Création des expressions réulières pour les emails et les passwords
-    let regexEmail = new RegExp("^[A-Za-z0-9._-]+@[A-Za-z0-9]+.[A-Za-z]{2,}$");
+    let regexEmail = new RegExp(
+      "^[A-Za-z0-9._-]+@[A-Za-z0-9]+\\.[A-Za-z]{2,}$"
+    );
     let regexPassword = new RegExp(
       "^[A-Za-z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?`~]{2,}$"
     );
